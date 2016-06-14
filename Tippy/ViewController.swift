@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var tipControl: UISegmentedControl!
+    @IBOutlet weak var tipPercentLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +33,18 @@ class ViewController: UIViewController {
         //Cast as a double, then if it can't return 0 as default value
         let billVal = Double(billField.text!) ?? 0
         let tipPercentages = [0.1, 0.15, 0.2]
-        let tip = billVal * tipPercentages[tipControl.selectedSegmentIndex]
+        var tip = billVal
+        if(tipControl.selectedSegmentIndex >= 0) {
+            tip = tip * tipPercentages[tipControl.selectedSegmentIndex]
+            tipPercentLabel.text = "Tip (\(Int(tipPercentages[tipControl.selectedSegmentIndex] * 100))%)"
+        }
+        else {
+            let tipPercent = NSUserDefaults.standardUserDefaults()
+            let t = tipPercent.doubleForKey("default_tip_percentage")
+            tip = tip * t
+            tipPercentLabel.text = "Tip (\(Int(t*100))%)"
+            
+        }
         let total = billVal + tip
         
         
