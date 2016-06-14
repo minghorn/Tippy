@@ -18,7 +18,17 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        let defaultPercent = NSUserDefaults.standardUserDefaults()
+        let tip = defaultPercent.doubleForKey("default_tip_percentage") * 100
+        if(tip != 0) {
+            tipPercentLabel.text = "Tip (\(Int(tip))%)"
+        }
     }
     
     override func didReceiveMemoryWarning() {

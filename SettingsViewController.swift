@@ -14,8 +14,18 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        let defaultPercent = NSUserDefaults.standardUserDefaults()
+        let tip = defaultPercent.doubleForKey("default_tip_percentage") * 100
+        if(tip != 0) {
+            defaultPercentageField.text = String(Int(tip))
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,13 +43,7 @@ class SettingsViewController: UIViewController {
         let defaultPercent = NSUserDefaults.standardUserDefaults()
         defaultPercent.setDouble(percent, forKey: "default_tip_percentage")
     }
-//    @IBAction func defaultIsSet(sender: AnyObject) {
-//        let defaultPercent = NSUserDefaults.standardUserDefaults()
-//        let tip = defaultPercent.doubleForKey("default_tip_percentage")
-//        if(tip > 0) {
-//            defaultPercentageField.text = String(tip)
-//        }
-//    }
+
     /*
     // MARK: - Navigation
 
